@@ -63,3 +63,172 @@ data "terraform_remote_state" "account" {
 
 ### Enhancements for Better Support/UX
 The TF pipeline's YAML configuration layer should be augmented to support a "terraform_remote_state" attribute to allow teams to configure remote workspaces. The pipeline will restrict them to workspaces that start with the appropriate tenant name. An OPA policy should be written to ensure this is not bypassed.
+
+
+## Workflow
+```
+# cd projects/aws-vendor
+# terraform init
+Initializing modules...
+- vendor in ../../tml/cloud-vendor
+
+Initializing the backend...
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+# terraform apply
+var.vendor_name
+  Enter a value: aws
+
+var.vendor_pwho
+  Enter a value: cloud-pwho
+
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+labels = {
+  "vendor_name" = "aws"
+  "vendor_pwho" = "cloud-pwho"
+}
+name = aws
+pwho = cloud-pwho
+# cd ../aws-environment
+main.tf
+# terraform init
+Initializing modules...
+- environment in ../../tml/cloud-environment
+
+Initializing the backend...
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+# terraform apply
+var.environment_name
+  Enter a value: dev
+
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+labels = {
+  "environment_name" = "dev"
+}
+name = dev
+
+# terraform workspace new dev
+Created and switched to workspace "dev"!
+
+You're now on a new, empty workspace. Workspaces isolate their state,
+so if you run "terraform plan" Terraform will not see any existing state
+for this configuration.
+# terraform workspace select dev
+# terraform apply
+var.environment_name
+  Enter a value: dev
+
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+labels = {
+  "environment_name" = "dev"
+}
+name = dev
+# cd ../aws-tenant
+
+# terraform init
+Initializing modules...
+- tenant in ../../tml/cloud-tenant
+
+Initializing the backend...
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+# terraform apply
+var.tenant_group_id
+  Enter a value: 1270
+
+var.tenant_name
+  Enter a value: webops
+
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+group_id = 1270
+labels = {
+  "tenant_group_id" = "1270"
+  "tenant_name" = "webops"
+}
+name = webops
+# cd ../aws-account
+# terraform init
+Initializing modules...
+- account in ../../tml/cloud-account
+
+Initializing the backend...
+
+Successfully configured the backend "local"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+# terraform apply
+data.terraform_remote_state.tenant: Refreshing state...
+data.terraform_remote_state.vendor: Refreshing state...
+data.terraform_remote_state.environment: Refreshing state...
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+labels = {
+  "account_id" = "1234567890"
+  "account_name" = "webops-dev"
+  "account_pwho" = "0987654321"
+  "cloud" = "aws"
+  "group_id" = "1270"
+  "group_name" = "webops"
+  "sla" = "dev"
+  "tenant_group_id" = "1270"
+  "tenant_name" = "webops"
+  "vendor_name" = "aws"
+  "vendor_pwho" = "cloud-pwho"
+}
+```
+
