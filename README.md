@@ -59,6 +59,13 @@ data "terraform_remote_state" "account" {
     workspace = "webopsinternal-${SK8S_ENVIRONMENT}-global-${PROVISIONER}-account-default"
   }
 }
+
+data "terraform_remote_state" "app_team_resources" {
+  backend = "pg"
+  config = {
+    prefix = "${SK8S_ORGANIZATION}-${SK8S_ENVIRONMENT}-${PROVISIONER}-${REGION}-"
+  }
+}
 ```
 
 ### Enhancements for Better Support/UX
