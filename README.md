@@ -67,7 +67,8 @@ The TF pipeline's YAML configuration layer should be augmented to support a "ter
 
 ## Workflow
 ```
-# cd projects/aws-vendor
+# docker run -it -v $(pwd):/data artprod.dev.bloomberg.com/webops/terraform:0.12.20 /bin/sh
+# cd /data/projects/aws-vendor
 # terraform init
 Initializing modules...
 - vendor in ../../tml/cloud-vendor
