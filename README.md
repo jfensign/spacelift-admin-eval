@@ -2,7 +2,7 @@
 
 
 ## Objective
-* Define Standard PCE/Cloud Platform Model(s)
+* Define Cloud-Agnostic PCE/Cloud Foundation Platform Model(s)
 
 ## Initial Use-Case/Immediate Value Prop
 * Standardize labels/tags and centralize their administration
