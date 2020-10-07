@@ -56,7 +56,7 @@ This example is roughly what the pipeline will provision.
 data "terraform_remote_state" "account" {
   backend = "pg"
   config = {
-    workspace = "webopsinternal-${SK8S_ENVIRONMENT}-global-${PROVISIONER}-account-default"
+    workspace = "webopsinternal-${SK8S_ENVIRONMENT}-global-${PROVISIONER}-account-${SK8S_TENANCY}"
   }
 }
 
