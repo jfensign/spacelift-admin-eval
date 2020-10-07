@@ -10,11 +10,11 @@ module "tenant" {
 }
 
 output "group_id" {
-  value = var.tenant_group_id
+  value = module.tenant.group_id
 }
 
 output "name" {
-  value = var.tenant_name
+  value = module.tenant.name
 }
 
 output "labels" {
