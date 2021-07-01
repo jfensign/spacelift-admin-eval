@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    spacelift = {
+      source = "spacelift-io/spacelift"
+    }
+  }
+}
+
 provider "spacelift" {}
 
 resource "spacelift_context" "vendor_context" {
