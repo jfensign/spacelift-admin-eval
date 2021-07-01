@@ -1,3 +1,4 @@
+provider "spacelift" {}
 
 resource "spacelift_context" "vendor_context" {
   description = "Platform vendor context for ${var.vendor_name}"
