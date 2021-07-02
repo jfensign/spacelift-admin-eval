@@ -8,7 +8,6 @@ terraform {
 
 provider "spacelift" {}
 
-
 data "spacelift_environment_variable" "tenant_name" {
   context_id = "context-tenant-${var.tenant}"
   name       = "TF_VAR_tenant_name"
