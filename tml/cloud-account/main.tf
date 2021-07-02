@@ -35,21 +35,21 @@ resource "spacelift_context" "account_context" {
 }
 
 resource "spacelift_environment_variable" "account_id" {
-  context_id = spacelift_context.environment_context.id
+  context_id = spacelift_context.account_context.id
   name       = "TF_VAR_account_id"
   value      = var.account_id
   write_only = false
 }
 
 resource "spacelift_environment_variable" "account_pwho" {
-  context_id = spacelift_context.environment_context.id
+  context_id = spacelift_context.account_context.id
   name       = "TF_VAR_account_pwho"
   value      = var.account_id
   write_only = false
 }
 
 resource "spacelift_environment_variable" "account_labels" {
-  context_id = spacelift_context.environment_context.id
+  context_id = spacelift_context.account_context.id
   name       = "TF_VAR_account_labels"
   value      = jsonencode({
     "account_pwho" = spacelift_environment_variable.account_pwho.value,
