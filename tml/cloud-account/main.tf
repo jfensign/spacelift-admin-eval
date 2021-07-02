@@ -10,22 +10,22 @@ provider "spacelift" {}
 
 data "spacelift_environment_variable" "tenant_name" {
   context_id = "platform-tenant-${var.tenant}"
-  name       = "TF_VAR_tenant_name"
+  name       = "TENANT_NAME"
 }
 
 data "spacelift_environment_variable" "tenant_group_id" {
   context_id = "platform-tenant-${var.tenant}"
-  name       = "TF_VAR_tenant_group_id"
+  name       = "TENANT_GROUP_ID"
 }
 
 data "spacelift_environment_variable" "environment" {
   context_id = "platform-environment-${var.environment}"
-  name       = "TF_VAR_environment_name"
+  name       = "ENVIRONMENT_NAME"
 }
 
 data "spacelift_environment_variable" "vendor" {
   context_id = "platform-vendor-${var.vendor}"
-  name       = "TF_VAR_vendor_name"
+  name       = "VENDOR_NAME"
 }
 
 resource "spacelift_context" "account_context" {
