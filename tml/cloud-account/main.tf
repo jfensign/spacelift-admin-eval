@@ -53,7 +53,9 @@ resource "spacelift_environment_variable" "account_labels" {
   name       = "TF_VAR_account_labels"
   value      = jsonencode({
     "account_pwho" = spacelift_environment_variable.account_pwho.value,
-    "account_gid"  = spacelift_environment_variable.tenant_group_id.value
+    "account_gid"  = data.spacelift_environment_variable.tenant_group_id.value
+    "environment"  = data.spacelift_environment_variable.environment.value,
+    "bu"           = data.spacelift_environment_variable.tenant_name.value,
   })
   write_only = false
 }
