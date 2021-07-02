@@ -20,7 +20,7 @@ data "spacelift_environment_variable" "tenant_group_id" {
 
 data "spacelift_environment_variable" "environment" {
   context_id = "platform-environment-${var.environment}"
-  name       = "ENVIRONMENT_NAME"
+  name       = "ENVIRONMENT"
 }
 
 data "spacelift_environment_variable" "vendor" {
