@@ -48,7 +48,7 @@ resource "spacelift_environment_variable" "account_pwho" {
   write_only = false
 }
 
-resource "spacelift_environment_variable" "account_pwho" {
+resource "spacelift_environment_variable" "account_labels" {
   context_id = spacelift_context.environment_context.id
   name       = "TF_VAR_account_labels"
   value      = jsonencode({
