@@ -1,36 +1,60 @@
-
-output "name" {
-  value = var.account_name
+terraform {
+  required_providers {
+    spacelift = {
+      source = "spacelift-io/spacelift"
+    }
+  }
 }
 
-output "group_name" {
-  value = var.account_group_name
+provider "spacelift" {}
+
+
+data "spacelift_environment_variable" "tenant_name" {
+  context_id = "context-tenant-${var.tenant}"
+  name       = "TF_VAR_tenant_name"
 }
 
-output "group_id" {
-  value = var.account_group_id
+data "spacelift_environment_variable" "tenant_group_id" {
+  context_id = "context-tenant-${var.tenant}"
+  name       = "TF_VAR_tenant_group_id"
 }
 
-output "pwho" {
-  value = var.account_pwho
+data "spacelift_environment_variable" "environment" {
+  context_id = "context-environment-${var.environment}"
+  name       = "TF_VAR_environment_name"
 }
 
-output "id" {
-  value = var.account_id
+data "spacelift_environment_variable" "vendor" {
+  context_id = "context-vendor-${var.vendor}"
+  name       = "TF_VAR_vendor_name"
 }
 
-output "cloud_id" {
-  value = var.account_cloud_id
+resource "spacelift_context" "account_context" {
+  description = "Platform vendor account context"
+  name        = "platform-account-${data.spacelift_environment_variable.vendor.value}-${data.spacelift_environment_variable.tenant_name.value}-${data.spacelift_environment_variable.environment.value}"
 }
 
-output "labels" {
-  value = merge(var.account_default_labels, {
-    cloud = var.account_cloud_id
-    group_id = var.account_group_id
-    group_name = var.account_group_name
-    account_id = var.account_id
-    account_pwho = var.account_pwho
-    account_name = var.account_name
-    sla = var.account_environment
+resource "spacelift_environment_variable" "account_id" {
+  context_id = spacelift_context.environment_context.id
+  name       = "TF_VAR_account_id"
+  value      = var.account_id
+  write_only = false
+}
+
+resource "spacelift_environment_variable" "account_pwho" {
+  context_id = spacelift_context.environment_context.id
+  name       = "TF_VAR_account_pwho"
+  value      = var.account_id
+  write_only = false
+}
+
+resource "spacelift_environment_variable" "account_pwho" {
+  context_id = spacelift_context.environment_context.id
+  name       = "TF_VAR_account_labels"
+  value      = jsonencode({
+    "account_pwho" = spacelift_environment_variable.account_pwho.value,
+    "account_gid"  = spacelift_environment_variable.tenant_group_id.value
   })
+  write_only = false
 }
+
